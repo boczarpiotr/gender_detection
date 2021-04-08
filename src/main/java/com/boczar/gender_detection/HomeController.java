@@ -1,0 +1,14 @@
+package com.boczar.gender_detection;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HomeController {
+
+    @RequestMapping("/hello")
+    public String hello(){
+        return "Hello World";
+    }
+}
