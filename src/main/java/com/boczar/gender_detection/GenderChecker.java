@@ -9,7 +9,7 @@ public class GenderChecker {
 
 
     public String checkOnlyFirstName(String path, String path2,  String[] names) {
-        String output = "";
+        String output = "This name is not present in our database";
 
         try (BufferedReader bf = new BufferedReader(new FileReader(path))) {
             while (bf.readLine() != null) {
@@ -34,5 +34,5 @@ public class GenderChecker {
         }
         return output;
     }
-    
+
 }
