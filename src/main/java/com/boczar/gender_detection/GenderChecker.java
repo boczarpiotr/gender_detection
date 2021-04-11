@@ -79,10 +79,4 @@ public class GenderChecker {
         }
     }
 
-    public static void main(String[] args) {
-        GenderChecker genderChecker = new GenderChecker();
-        String[] names = {"Leo", "Ava", "Aria"};
-        System.out.println(genderChecker.detectGenderByAllNames(names));
-        System.out.println(genderChecker.detectGenderByFistName(names));
-    }
 }
