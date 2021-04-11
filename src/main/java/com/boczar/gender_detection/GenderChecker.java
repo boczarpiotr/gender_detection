@@ -8,6 +8,9 @@ public class GenderChecker {
 
 
     public String checkOnlyFirstName(String[] names) {
+        if (names == null){
+            throw new NullPointerException("Please provide list of names");
+        }
         String output = "This name is not present in our database";
 
         try (BufferedReader bf = new BufferedReader(new FileReader("male_names.txt"))) {
@@ -32,6 +35,12 @@ public class GenderChecker {
 
         }
         return output;
+    }
+
+    public static void main(String[] args) {
+        GenderChecker genderChecker = new GenderChecker();
+        String[] names = null;
+        System.out.println(genderChecker.checkOnlyFirstName(names));
     }
 
 }
