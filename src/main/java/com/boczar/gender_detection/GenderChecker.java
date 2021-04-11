@@ -1,6 +1,5 @@
 package com.boczar.gender_detection;
 
-import java.beans.FeatureDescriptor;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,10 +7,10 @@ import java.io.IOException;
 public class GenderChecker {
 
 
-    public String checkOnlyFirstName(String path, String path2,  String[] names) {
+    public String checkOnlyFirstName(String[] names) {
         String output = "This name is not present in our database";
 
-        try (BufferedReader bf = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader bf = new BufferedReader(new FileReader("male_names.txt"))) {
             while (bf.readLine() != null) {
                 if (names[0].equals(bf.readLine())) {
                     output = "Male";
@@ -22,7 +21,7 @@ public class GenderChecker {
 
         }
 
-        try (BufferedReader bf = new BufferedReader(new FileReader(path2))) {
+        try (BufferedReader bf = new BufferedReader(new FileReader("female_names.txt"))) {
             while (bf.readLine() != null) {
                 if (names[0].equals(bf.readLine())) {
                     output = "Female";

@@ -17,9 +17,8 @@ public class TokenScreen {
 
         List<String> maleNames = new ArrayList<>();
 
-        String path = "C:\\Users\\Piortek\\Desktop\\gender_detection\\male_names.txt";
 
-        try (BufferedReader bf = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader bf = new BufferedReader(new FileReader("male_names.txt"))) {
             while (bf.readLine() != null) {
                 maleNames.add(bf.readLine());
             }
@@ -35,15 +34,13 @@ public class TokenScreen {
 
         List<String> femaleNames = new ArrayList<>();
 
-        String path = "C:\\Users\\Piortek\\Desktop\\gender_detection\\female_names.txt";
 
-        try (BufferedReader bf = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader bf = new BufferedReader(new FileReader("female_names.txt"))) {
             while (bf.readLine() != null) {
                 femaleNames.add(bf.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
-
         }
         return femaleNames;
     }
