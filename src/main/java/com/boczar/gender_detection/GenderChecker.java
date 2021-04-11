@@ -7,15 +7,15 @@ import java.io.IOException;
 public class GenderChecker {
 
 
-    public String checkOnlyFirstName(String[] names) {
-        if (names == null){
+    public String detectGenderByFistName(String[] names) {
+        if (names == null) {
             throw new NullPointerException("Please provide list of names");
         }
         String output = "This name is not present in our database";
-
+        String currentLine;
         try (BufferedReader bf = new BufferedReader(new FileReader("male_names.txt"))) {
-            while (bf.readLine() != null) {
-                if (names[0].equals(bf.readLine())) {
+            while ((currentLine = bf.readLine()) != null) {
+                if (names[0].equals(currentLine)) {
                     output = "Male";
                 }
             }
@@ -25,8 +25,8 @@ public class GenderChecker {
         }
 
         try (BufferedReader bf = new BufferedReader(new FileReader("female_names.txt"))) {
-            while (bf.readLine() != null) {
-                if (names[0].equals(bf.readLine())) {
+            while ((currentLine = bf.readLine()) != null) {
+                if (names[0].equals(currentLine)) {
                     output = "Female";
                 }
             }
@@ -37,10 +37,52 @@ public class GenderChecker {
         return output;
     }
 
-    public static void main(String[] args) {
-        GenderChecker genderChecker = new GenderChecker();
-        String[] names = null;
-        System.out.println(genderChecker.checkOnlyFirstName(names));
+    public String detectGenderByAllNames(String[] names) {
+        if (names == null) {
+            throw new NullPointerException("Please provide list of names");
+        }
+
+        int maleOccurance = 0;
+        int femaleOccurance = 0;
+
+        try (BufferedReader bf = new BufferedReader(new FileReader("male_names.txt"))) {
+            String currentLine;
+            while ((currentLine = bf.readLine()) != null) {
+                for (String name : names) {
+                    if (name.equals(currentLine)) {
+                        maleOccurance++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedReader bf = new BufferedReader(new FileReader("female_names.txt"))) {
+            String currentLine;
+            while ((currentLine = bf.readLine()) != null) {
+                for (String name : names) {
+                    if (name.equals(currentLine)) {
+                        femaleOccurance++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (maleOccurance > femaleOccurance) {
+            return "Male";
+        } else if (femaleOccurance > maleOccurance) {
+            return "Female";
+        } else {
+            return "INCONCLUSIVE";
+        }
     }
 
+    public static void main(String[] args) {
+        GenderChecker genderChecker = new GenderChecker();
+        String[] names = {"Leo", "Ava", "Aria"};
+        System.out.println(genderChecker.detectGenderByAllNames(names));
+        System.out.println(genderChecker.detectGenderByFistName(names));
+    }
 }
