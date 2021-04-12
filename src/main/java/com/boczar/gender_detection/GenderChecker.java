@@ -3,6 +3,7 @@ package com.boczar.gender_detection;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class GenderChecker {
 
@@ -77,6 +78,14 @@ public class GenderChecker {
         } else {
             return "INCONCLUSIVE";
         }
+    }
+    public String[] convertStringToArray(String string){
+        if (string == null){
+            throw new NullPointerException("Please provide list of names");
+        }
+        String s = string.replaceAll("\\s", "");
+        return s.split(",");
+
     }
 
 }
