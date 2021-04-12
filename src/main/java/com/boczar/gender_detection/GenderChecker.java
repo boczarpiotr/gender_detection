@@ -1,10 +1,12 @@
 package com.boczar.gender_detection;
 
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
+@Service
 public class GenderChecker {
 
 

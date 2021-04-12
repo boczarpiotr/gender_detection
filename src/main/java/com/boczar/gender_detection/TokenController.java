@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class TokenScreen {
+public class TokenController {
 
     @RequestMapping("/tokens/male")
     public List<String> getMaleTokens() {

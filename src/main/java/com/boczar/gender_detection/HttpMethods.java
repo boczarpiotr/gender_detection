@@ -5,14 +5,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping
 public class HttpMethods {
 
-    GenderChecker genderChecker = new GenderChecker();
+    private final GenderChecker genderChecker;
+
+    public HttpMethods(GenderChecker genderChecker) {
+        this.genderChecker = genderChecker;
+    }
 
     @PostMapping("/detect/byone")
     public String chceckGenderByOne(@RequestBody String string) {
