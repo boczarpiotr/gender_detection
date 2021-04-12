@@ -1,6 +1,7 @@
 package com.boczar.gender_detection;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,19 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping
 public class HttpMethods {
 
-    List<String> listOfStrings = new ArrayList<>();
+    GenderChecker genderChecker = new GenderChecker();
 
-    @PostMapping("/post")
-    public boolean chceckGender (String string){
-
-        return listOfStrings.add(string);
+    @PostMapping("/detect/byone")
+    public String chceckGenderByOne(@RequestBody String string) {
+        String[] strings = genderChecker.convertStringToArray(string);
+        return genderChecker.detectGenderByFistName(strings);
 
     }
-    @RequestMapping("/word")
-    public List<String> getList(){
-        return listOfStrings;
+    @PostMapping("/detect/byall")
+    public String chceckGenderByAll(@RequestBody String string) {
+        String[] strings = genderChecker.convertStringToArray(string);
+        return genderChecker.detectGenderByAllNames(strings);
+
     }
 
 

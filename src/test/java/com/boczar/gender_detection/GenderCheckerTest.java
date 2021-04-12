@@ -69,4 +69,11 @@ class GenderCheckerTest {
         Assertions.assertThrows(NullPointerException.class, () -> genderChecker.convertStringToArray(string));
     }
 
+    @Test
+    public void convertingStringShouldReturnArrayPartTwo() {
+        String string = "Liam, Caleb, Ava";
+        String[] stringArray = {"Liam", "Caleb", "Ava"};
+        Assertions.assertArrayEquals(stringArray, genderChecker.convertStringToArray(string));
+
+    }
 }
