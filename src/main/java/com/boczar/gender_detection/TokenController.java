@@ -12,36 +12,31 @@ import java.util.List;
 @RestController
 public class TokenController {
 
-    @RequestMapping("/tokens/male")
-    public List<String> getMaleTokens() {
-
-        List<String> maleNames = new ArrayList<>();
+    public List<String> readAllFromTxt(String fileName) {
+        List<String> names = new ArrayList<>();
 
 
-        try (BufferedReader bf = new BufferedReader(new FileReader("male_names.txt"))) {
+        try (BufferedReader bf = new BufferedReader(new FileReader(fileName))) {
             while (bf.readLine() != null) {
-                maleNames.add(bf.readLine());
+                names.add(bf.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
 
         }
-        return maleNames;
+        return names;
+
+    }
+
+    @RequestMapping("/tokens/male")
+    public List<String> getMaleTokens() {
+
+        return readAllFromTxt("male_names.txt");
     }
 
     @RequestMapping("/tokens/female")
     public List<String> getFemaleTokens() {
 
-        List<String> femaleNames = new ArrayList<>();
-
-
-        try (BufferedReader bf = new BufferedReader(new FileReader("female_names.txt"))) {
-            while (bf.readLine() != null) {
-                femaleNames.add(bf.readLine());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return femaleNames;
+        return readAllFromTxt("female_names.txt");
     }
 }
