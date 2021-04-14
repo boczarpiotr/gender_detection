@@ -27,6 +27,10 @@ public class TokenController {
         return names;
 
     }
+    @RequestMapping("/hello")
+    public String hello(){
+        return "Hello World";
+    }
 
     @RequestMapping("/tokens/male")
     public List<String> getMaleTokens() {

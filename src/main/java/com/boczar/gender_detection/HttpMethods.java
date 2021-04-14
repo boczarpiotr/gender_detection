@@ -16,17 +16,25 @@ public class HttpMethods {
     }
 
     @PostMapping("/detect/byone")
+
     public String chceckGenderByOne(@RequestBody String string) {
+        if (string == null) {
+            throw new NullPointerException("Please provide list of names");
+        }
         String[] strings = genderDetector.convertStringToArray(string);
         return genderDetector.detectGenderByFistName(strings);
 
     }
+
     @PostMapping("/detect/byall")
+
     public String chceckGenderByAll(@RequestBody String string) {
+        if (string == null) {
+            throw new NullPointerException("Please provide list of names");
+        }
         String[] strings = genderDetector.convertStringToArray(string);
         return genderDetector.detectGenderByAllNames(strings);
 
     }
-
-
 }
+
