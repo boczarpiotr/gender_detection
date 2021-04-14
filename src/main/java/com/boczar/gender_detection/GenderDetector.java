@@ -7,37 +7,34 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @Service
-public class GenderChecker {
+public class GenderDetector {
+
+    public String readFromTxt(String fileName, String gender, String[] names) {
+        String output = "";
+        String currentLine;
+        try (BufferedReader bf = new BufferedReader(new FileReader(fileName))) {
+            while ((currentLine = bf.readLine()) != null) {
+                if (names[0].equals(currentLine)) {
+                    output = gender;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
 
 
     public String detectGenderByFistName(String[] names) {
         if (names == null) {
             throw new NullPointerException("Please provide list of names");
         }
-        String output = "This name is not present in our database";
-        String currentLine;
-        try (BufferedReader bf = new BufferedReader(new FileReader("male_names.txt"))) {
-            while ((currentLine = bf.readLine()) != null) {
-                if (names[0].equals(currentLine)) {
-                    output = "Male";
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-
+        if ((readFromTxt("male_names.txt", "Male", names)).length() == 0) {
+            return readFromTxt("female_names.txt", "Female", names);
+        } else {
+            return readFromTxt("male_names.txt", "Male", names);
         }
 
-        try (BufferedReader bf = new BufferedReader(new FileReader("female_names.txt"))) {
-            while ((currentLine = bf.readLine()) != null) {
-                if (names[0].equals(currentLine)) {
-                    output = "Female";
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-        return output;
     }
 
     public String detectGenderByAllNames(String[] names) {
@@ -81,8 +78,9 @@ public class GenderChecker {
             return "INCONCLUSIVE";
         }
     }
-    public String[] convertStringToArray(String string){
-        if (string == null){
+
+    public String[] convertStringToArray(String string) {
+        if (string == null) {
             throw new NullPointerException("Please provide list of names");
         }
         String s = string.replaceAll("\\s", "");

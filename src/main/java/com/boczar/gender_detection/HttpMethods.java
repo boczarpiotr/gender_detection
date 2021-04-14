@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class HttpMethods {
 
-    private final GenderChecker genderChecker;
+    private final GenderDetector genderDetector;
 
-    public HttpMethods(GenderChecker genderChecker) {
-        this.genderChecker = genderChecker;
+    public HttpMethods(GenderDetector genderDetector) {
+        this.genderDetector = genderDetector;
     }
 
     @PostMapping("/detect/byone")
     public String chceckGenderByOne(@RequestBody String string) {
-        String[] strings = genderChecker.convertStringToArray(string);
-        return genderChecker.detectGenderByFistName(strings);
+        String[] strings = genderDetector.convertStringToArray(string);
+        return genderDetector.detectGenderByFistName(strings);
 
     }
     @PostMapping("/detect/byall")
     public String chceckGenderByAll(@RequestBody String string) {
-        String[] strings = genderChecker.convertStringToArray(string);
-        return genderChecker.detectGenderByAllNames(strings);
+        String[] strings = genderDetector.convertStringToArray(string);
+        return genderDetector.detectGenderByAllNames(strings);
 
     }
 
