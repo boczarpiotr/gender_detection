@@ -1,5 +1,8 @@
 package com.boczar.gender_detection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.session.NonUniqueSessionRepositoryException;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -9,7 +12,23 @@ import java.io.IOException;
 @Service
 public class GenderDetector {
 
+    private static final String male = "Male";
+    private static final String female = "Female";
+
+    Logger logger = LoggerFactory.getLogger(GenderDetector.class);
+
     public String readFromTextAndCheckFirstName(String fileName, String gender, String[] names) {
+
+        if (fileName == null) {
+            throw new NullPointerException("Please provide file name");
+        }
+        if (names == null) {
+            throw new NullPointerException("Please provide names");
+        }
+        if (gender.equals("")) {
+            throw new RuntimeException("Please provide name of gender that will be checked");
+        }
+
         String output = "";
         String currentLine;
         try (BufferedReader bf = new BufferedReader(new FileReader(fileName))) {
@@ -19,13 +38,21 @@ public class GenderDetector {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Please make sure your input path is correct");
         }
         return output;
     }
 
     public int readFromTxtAndCheckAllNames(String fileName, String[] names) {
-        int occurance = 0;
+
+        if (fileName == null) {
+            throw new NullPointerException("Please provide path to file with names");
+        }
+        if (names == null) {
+            throw new NullPointerException("Please provide names");
+        }
+
+        int occurrence = 0;
 
         try (
                 BufferedReader bf = new BufferedReader(new FileReader(fileName))) {
@@ -33,19 +60,19 @@ public class GenderDetector {
             while ((currentLine = bf.readLine()) != null) {
                 for (String name : names) {
                     if (name.equals(currentLine)) {
-                        occurance++;
+                        occurrence++;
                     }
                 }
             }
         } catch (
                 IOException e) {
-            e.printStackTrace();
+            logger.error("Please make sure your input path is correct");
         }
-        return occurance;
+        return occurrence;
     }
 
 
-    public String detectGenderByFistName(String[] names) {
+    public String detectGenderByFistName(String[] names) throws NullPointerException {
         if (names == null) {
             throw new NullPointerException("Please provide list of names");
         }
@@ -54,7 +81,6 @@ public class GenderDetector {
         } else {
             return readFromTextAndCheckFirstName("male_names.txt", "Male", names);
         }
-
     }
 
 
@@ -66,9 +92,9 @@ public class GenderDetector {
         int femaleOccurance = readFromTxtAndCheckAllNames("female_names.txt", names);
 
         if (maleOccurance > femaleOccurance) {
-            return "Male";
+            return male;
         } else if (femaleOccurance > maleOccurance) {
-            return "Female";
+            return female;
         } else {
             return "INCONCLUSIVE";
         }

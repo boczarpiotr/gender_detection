@@ -1,5 +1,7 @@
 package com.boczar.gender_detection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @RestController
 public class TokenController {
 
+    Logger logger = LoggerFactory.getLogger(TokenController.class);
+
     public List<String> readAllFromTxt(String fileName) {
         List<String> names = new ArrayList<>();
 
@@ -21,15 +25,11 @@ public class TokenController {
                 names.add(bf.readLine());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Please make sure your input path is correct");
 
         }
         return names;
 
-    }
-    @RequestMapping("/hello")
-    public String hello(){
-        return "Hello World";
     }
 
     @RequestMapping("/tokens/male")
