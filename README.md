@@ -3,7 +3,7 @@
 Gender Detection in an application for detect gender by providing list of names.
 
 
-##Instalation
+## Instalation
 
 To create Jar file please use below commends:
 ```bash
@@ -44,7 +44,7 @@ http://localhost:8080/tokens/female
 
 Files with tokens are stored in "resources".
 
-##Usage
+## Usage
 ```bash
 {"Leo, Ava, Aria"} 
 Post method to http://localhost:8080/detect/byone # wil return "Male"
@@ -53,6 +53,6 @@ Post method to http://localhost:8080/detect/byone # wil return "Male"
 Post method to http://localhost:8080/detect/byall # wil return "Female"
 ```
 
-##Author
+## Author
 
 Piotr Boczar
