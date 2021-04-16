@@ -45,7 +45,7 @@ class DetectionControllerTest {
     }
 
     @Test
-    public void checkByAllhouldReturnFemale() throws Exception {
+    public void checkByAllShouldReturnFemale() throws Exception {
 
         this.mockMvc
                 .perform(post("/detect/byall")
@@ -56,7 +56,7 @@ class DetectionControllerTest {
     }
 
     @Test
-    public void checkByAllhouldReturnMale() throws Exception {
+    public void checkByAllShouldReturnMale() throws Exception {
 
         this.mockMvc
                 .perform(post("/detect/byall")
@@ -66,4 +66,36 @@ class DetectionControllerTest {
                 .andExpect(content().string(containsString("Male")));
     }
 
+    @Test
+    public void checkByAllShouldReturnInconclusive() throws Exception {
+
+        this.mockMvc
+                .perform(post("/detect/byall")
+                        .contentType(MediaType.ALL_VALUE)
+                        .content("Ava , Leo , Owen  , Aria"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("INCONCLUSIVE")));
+    }
+
+    @Test
+    public void emptyStringShouldReturnBadRequestInDetectByAll() throws Exception {
+
+        this.mockMvc
+                .perform(post("/detect/byall")
+                        .contentType(MediaType.ALL_VALUE)
+                        .content(""))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void emptyStringShouldReturnBadRequestInDetectByOne() throws Exception {
+
+        this.mockMvc
+                .perform(post("/detect/byone")
+                        .contentType(MediaType.ALL_VALUE)
+                        .content(""))
+                .andExpect(status().isBadRequest());
+
+    }
 }

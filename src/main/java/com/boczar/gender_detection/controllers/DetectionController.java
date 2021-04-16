@@ -1,6 +1,7 @@
 package com.boczar.gender_detection.controllers;
 
 import com.boczar.gender_detection.GenderDetector;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ public class DetectionController {
 
     public DetectionController(GenderDetector genderDetector) {
         this.genderDetector = genderDetector;
+
     }
 
     @PostMapping("/detect/byone")
