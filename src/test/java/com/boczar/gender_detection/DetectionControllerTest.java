@@ -6,17 +6,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
-import org.springframework.web.accept.ContentNegotiationStrategy;
-import org.springframework.web.context.request.NativeWebRequest;
 
-import java.awt.*;
-import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,21 +16,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class HttpMethodsTest{
+class DetectionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    
+
 
     @Test
     public void checkByOneNameShouldReturnMale() throws Exception {
 
         this.mockMvc
                 .perform(post("/detect/byone")
-                .contentType(MediaType.ALL_VALUE)
-                .content("Leo , Ava"))
-        .andExpect(status().isOk())
-        .andExpect(content().string(containsString("Male")));
+                        .contentType(MediaType.ALL_VALUE)
+                        .content("Leo , Ava"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Male")));
     }
 
     @Test
@@ -74,4 +66,36 @@ class HttpMethodsTest{
                 .andExpect(content().string(containsString("Male")));
     }
 
+    @Test
+    public void checkByAllShouldReturnInconclusive() throws Exception {
+
+        this.mockMvc
+                .perform(post("/detect/byall")
+                        .contentType(MediaType.ALL_VALUE)
+                        .content("Ava , Leo , Owen  , Aria"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("INCONCLUSIVE")));
+    }
+
+    @Test
+    public void emptyStringShouldReturnBadRequestInDetectByAll() throws Exception {
+
+        this.mockMvc
+                .perform(post("/detect/byall")
+                        .contentType(MediaType.ALL_VALUE)
+                        .content(""))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void emptyStringShouldReturnBadRequestInDetectByOne() throws Exception {
+
+        this.mockMvc
+                .perform(post("/detect/byone")
+                        .contentType(MediaType.ALL_VALUE)
+                        .content(""))
+                .andExpect(status().isBadRequest());
+
+    }
 }

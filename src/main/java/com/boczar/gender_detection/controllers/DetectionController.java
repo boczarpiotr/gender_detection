@@ -1,5 +1,7 @@
-package com.boczar.gender_detection;
+package com.boczar.gender_detection.controllers;
 
+import com.boczar.gender_detection.GenderDetector;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,19 +9,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping
-public class HttpMethods {
+public class DetectionController {
 
     private final GenderDetector genderDetector;
 
-    public HttpMethods(GenderDetector genderDetector) {
+    public DetectionController(GenderDetector genderDetector) {
         this.genderDetector = genderDetector;
+
     }
 
     @PostMapping("/detect/byone")
 
     public String chceckGenderByOne(@RequestBody String string) {
         if (string == null) {
-            throw new NullPointerException("Please provide list of names");
+            throw new IllegalArgumentException("Please provide list of names");
         }
         String[] strings = genderDetector.convertStringToArray(string);
         return genderDetector.detectGenderByFistName(strings);
@@ -30,7 +33,7 @@ public class HttpMethods {
 
     public String chceckGenderByAll(@RequestBody String string) {
         if (string == null) {
-            throw new NullPointerException("Please provide list of names");
+            throw new IllegalArgumentException("Please provide list of names");
         }
         String[] strings = genderDetector.convertStringToArray(string);
         return genderDetector.detectGenderByAllNames(strings);

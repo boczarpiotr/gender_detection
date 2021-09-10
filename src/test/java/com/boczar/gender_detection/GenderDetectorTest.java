@@ -12,7 +12,7 @@ class GenderDetectorTest {
 
     @BeforeEach
     public void setup() {
-        genderDetector = new GenderDetector();
+        genderDetector = new GenderDetector("male_names.txt", "female_names.txt");
     }
 
     @Test
