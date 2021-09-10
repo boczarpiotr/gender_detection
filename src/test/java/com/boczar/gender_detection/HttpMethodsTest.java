@@ -53,7 +53,7 @@ class HttpMethodsTest{
     }
 
     @Test
-    public void checkByAllhouldReturnFemale() throws Exception {
+    public void checkByAllShouldReturnFemale() throws Exception {
 
         this.mockMvc
                 .perform(post("/detect/byall")
@@ -64,7 +64,7 @@ class HttpMethodsTest{
     }
 
     @Test
-    public void checkByAllhouldReturnMale() throws Exception {
+    public void checkByAllShouldReturnMale() throws Exception {
 
         this.mockMvc
                 .perform(post("/detect/byall")
